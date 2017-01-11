@@ -18,6 +18,7 @@ Right now this is just a list of the things I bought. It is **not** a bare-minim
 - [IRremoteESP8266](https://github.com/markszabo/IRremoteESP8266) to send IR from the ESP8266
 - [Download NodeJS](https://nodejs.org/en/download/) find "All download options" and download the `node-vX.X.X-linux-armv7l.tar.gz`
 - [MQTT.fx](http://mqttfx.jfx4ee.org/index.php/download) for testing MQTT topics
+- [MQTT server for ESP8266](https://github.com/Imroy/pubsubclient)
 
 ## Helpful Links
 
