@@ -16,6 +16,7 @@ Right now this is just a list of the things I bought. It is **not** a bare-minim
 
 - [HAP-NodeJS](https://github.com/KhaosT/HAP-NodeJS) installed on the Raspberry Pi to be a HomeKit server
 - [IRremoteESP8266](https://github.com/markszabo/IRremoteESP8266) to send IR from the ESP8266
+- [Download NodeJS](https://nodejs.org/en/download/) find "All download options" and download the `node-vX.X.X-linux-armv7l.tar.gz`
 
 ## Helpful Links
 
@@ -23,3 +24,4 @@ Right now this is just a list of the things I bought. It is **not** a bare-minim
 - [ESP8266 pin diagram](https://cloud.githubusercontent.com/assets/2471931/7339810/935456c8-ec7b-11e4-9fa7-43d9c57b840a.png)
 - [Setting up Arduino IDE for ESP8266](https://www.hackster.io/Aritro/getting-started-with-esp-nodemcu-using-arduinoide-aa7267)
 - [Using MQTT with HAP-NodeJS accessory](https://gist.githubusercontent.com/jamesabruce/a6607fa9d93e41042fee/raw/12e4fd1d1c2624e7540ba5e17c3e79bc6bdec5fd/Officelight_accessory.js)
+- [HomeKit + RaspberryPi tutorial](http://www.makeuseof.com/tag/make-diy-siri-controlled-wi-fi-light/)
