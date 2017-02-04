@@ -282,7 +282,7 @@ def delete_pending_command(command_pk):
   return redirect(url_for('get_pending'))
 
 def run_node():
-  execute('DEBUG=* node HAP-NodeJS/Core.js')
+  execute('DEBUG=* node hap/Core.js')
 
 @app.route('/restart')
 def restart_hap():
