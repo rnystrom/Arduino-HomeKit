@@ -1,10 +1,11 @@
 #!/bin/bash
 
-# Install python dev environment to build c libs
-echo "Install python-dev as sudo..."
+echo "Install required build tools and services as sudo..."
 sudo apt-get install python-dev
 
-# Globally install python and node env to keep all changes local
+echo "Updating git submodules..."
+git submodule update --init --recursive
+
 echo "Install virtualenv and nodeenv as sudo..."
 sudo pip install virtualenv nodeenv
 
@@ -18,8 +19,12 @@ nodeenv nenv
 . nenv/bin/activate
 cd hap && npm install
 npm install sync-request
+cd ..
+
+echo "Initializing the database"
+export FLASK_APP=app.py
+flask initdb
 
 echo "Exiting environments..."
 deactivate
-cd ..
 echo "done"
