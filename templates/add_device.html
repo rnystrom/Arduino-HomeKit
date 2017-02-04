@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block body %}
+	<h1>Add Device</h1>
+	<form action="{{ url_for('new_device') }}" method="post">
+		<div class="form-group">
+			<label for="name">Name</label>
+	    <input type="text" class="form-control" id="name" name="name" placeholder="e.g. Air Conditioner">
+		</div>
+    <div class="form-group">
+      <label for="name">Username</label>
+      <input type="text" class="form-control" id="username" name="username" placeholder="e.g. C1:5D:3A:AE:5E:FA">
+    </div>
+    <div class="form-group">
+      <label for="name">Pin</label>
+      <input type="number" class="form-control" id="pin" name="pin" placeholder="2-4">
+    </div>
+    <div class="form-group">
+      <label for="name">Serial Number</label>
+      <input type="text" class="form-control" id="serial_number" name="serial_number" placeholder="e.g. A12S345KGB">
+    </div>
+    <div class="form-group">
+      <label for="name">Model (optional)</label>
+      <input type="text" class="form-control" id="model" name="model" placeholder="e.g. Hue Bulb">
+    </div>
+    <div class="form-group">
+      <label for="name">Manufacturer (optional)</label>
+      <input type="text" class="form-control" id="manufacturer" name="manufacturer" placeholder="e.g. Philips">
+    </div>
+    <div class="form-group">
+      <label for="name">Channel</label>
+      <select class="form-control" id="channel" name="channel">
+      {% for channel in channels %}
+        <option value="{{ channel.pk }}">{{ channel.name }}</option>
+      {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="sequence">IR Sequence</label>
+      <textarea rows="3" class="form-control" id="sequence" name="sequence" placeholder="100,15,450..."></textarea>
+    </div>
+	  <button type="submit" class="btn btn-default">Submit</button>
+	</form>
+{% endblock %}

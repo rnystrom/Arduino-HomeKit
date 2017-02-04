@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block body %}
+	<h1>Add Command</h1>
+	<form>
+		<div class="form-group">
+			<label for="input_name">Command Name</label>
+	    <input type="text" class="form-control" id="input_name" placeholder="e.g. Power">
+		</div>
+		<div class="form-group">
+			<label for="channel">Channel</label>
+			<select id="channel" class="form-control">
+			{% for channel in channels %}
+				<option value="{{ channel.pk }}">{{ channel.name }}</option>
+			{% endfor %}
+			</select>
+		</div>
+	  <button type="submit" class="btn btn-default">Submit</button>
+	</form>
+
+	<h2>Raw sequence</h2>
+	<pre class="pre-scrollable">
+		{{ command.command }}
+	</pre>
+{% endblock %}

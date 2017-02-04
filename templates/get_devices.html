@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block body %}
+	<h1>Manage Devices</h1>
+	<a class="btn btn-default btn-lg" href="{{ url_for('add_device') }}">
+	  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Device
+	</a>
+	<div class="table-responsive">
+		<table class="table table-striped">
+	    	<thead>
+	    		<tr>
+		    		<th>Name</th>
+		    		<th>Pin</th>
+		    		<th>State</th>
+		    		<th>Actions</th>
+	    		</tr>
+	    	</thead>
+	    	<tbody>
+		    {% for device in devices %}
+	        <tr>
+		        <td>{{ device.name }}</td>
+		        <td>{{ device.pin }}</td>
+		        <td>{{ device.state }}</td>
+	        	<td>
+		        	<a class="btn btn-default" href="{{ url_for('get_device', device_pk=device.pk) }}">
+								Edit
+	        		</a>
+	        		<a class="btn btn-danger" href="{{ url_for('delete_device', device_pk=device.pk) }}">
+								Delete
+	        		</a>
+	        	</td>
+	        </tr>
+		    {% endfor %}
+			  </tbody>
+	    </table>
+	</div>
+{% endblock %}

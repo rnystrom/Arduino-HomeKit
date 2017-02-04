@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block body %}
+	<h1>Manage Channels</h1>
+	<a class="btn btn-default btn-lg" href="{{ url_for('add_channel') }}">
+	  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add Channel
+	</a>
+	<div class="table-responsive">
+		<table class="table table-striped">
+	    	<thead>
+	    		<tr>
+		    		<th>Name</th>
+		    		<th>Actions</th>
+	    		</tr>
+	    	</thead>
+	    	<tbody>
+		    {% for channel in channels %}
+	        <tr>
+		        <td>{{ channel.name }}</td>
+	        	<td>
+	        		<a class="btn btn-danger" href="{{ url_for('delete_channel', channel_pk=channel.pk) }}">
+								Delete
+	        		</a>
+	        	</td>
+	        </tr>
+		    {% endfor %}
+			  </tbody>
+	    </table>
+	</div>
+{% endblock %}

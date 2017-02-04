@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block body %}
+	<h1>Received Commands</h1>
+	<div class="table-responsive">
+		<table class="table table-striped">
+	    	<thead>
+	    		<tr>
+		    		<th>Date Received</th>
+		    		<th>Hz Sequence</th>
+		    		<th>Actions</th>
+	    		</tr>
+	    	</thead>
+	    	<tbody>
+		    {% for command in commands %}
+	        <tr>
+		        <td>{{ command.datetime }}</td>
+	        	<td>{{ command.command }}</td>
+	        	<td>
+	        		<a class="btn btn-default" href="{{ url_for('get_pending_command', command_pk=command.pk) }}">
+	        			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add
+	        		</a>
+	        		<a class="btn btn-danger" href="{{ url_for('delete_pending_command', command_pk=command.pk) }}">
+								Delete
+	        		</a>
+	        	</td>
+	        </tr>
+		    {% endfor %}
+			  </tbody>
+	    </table>
+	</div>
+{% endblock %}
