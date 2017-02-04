@@ -1,0 +1,4 @@
+[submodule "hap"]
+	path = hap
+	url = git@github.com:rnystrom/HAP-NodeJS.git
+    ignore = dirty
