@@ -19,6 +19,20 @@ app.config.update(dict(
 ))
 app.config.from_envvar('APP_SETTINGS', silent=True)
 
+def run_node():
+  # execute('DEBUG=* node hap/Core.js')
+  execute('node hap/Core.js')
+
+def restart_node():
+  for proc in psutil.process_iter():
+    if proc.name() == 'node':
+      proc.kill()
+
+  p = Process(target=run_node)
+  p.start()
+
+restart_node()
+
 def connect_db():
   rv = sqlite3.connect(app.config['DATABASE'])
   rv.row_factory = sqlite3.Row
@@ -282,19 +296,9 @@ def delete_pending_command(command_pk):
     [command_pk])
   return redirect(url_for('get_pending'))
 
-def run_node():
-  # execute('DEBUG=* node hap/Core.js')
-  execute('node hap/Core.js')
-
 @app.route('/restart')
 def restart_hap():
-  for proc in psutil.process_iter():
-    if proc.name() == 'node':
-      proc.kill()
-
-  p = Process(target=run_node)
-  p.start()
-
+  restart_nod()
   return redirect(url_for('get_devices'))
 
 def device_to_dict(device):
