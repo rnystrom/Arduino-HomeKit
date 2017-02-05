@@ -39,30 +39,6 @@ void setup_wifi()
   Serial.print(WiFi.localIP());
 }
 
-void reconnect()
-{
-  // Loop until we're reconnected
-  while (!client.connected()) {
-    Serial.print("Attempting MQTT connection...");
-    // Create a random client ID
-    String clientId = "ESP8266Client-";
-    clientId += String(random(0xffff), HEX);
-    // Attempt to connect
-    if (client.connect(clientId.c_str())) {
-      Serial.println("connected");
-      // Once connected, publish an announcement...
-      client.publish(host, "hello world");
-      // ... and resubscribe
-      client.subscribe(host);
-    } else {
-      Serial.print("failed");
-      Serial.println(" try again in 5 seconds");
-      // Wait 5 seconds before retrying
-      delay(5000);
-    }
-  }
-}
-
 void setup_ir()
 {
   Serial.println("Booting IR...");
@@ -82,10 +58,20 @@ void setup()
 
 void loop() 
 {
-  if (!client.connected()) {
-    reconnect();
+  if (WiFi.status() == WL_CONNECTED) {
+    if (!client.connected()) {
+      if (client.connect("ESP8266: Fountain")) {
+        client.subscribe(host);
+        Serial.print("Connected to ");
+        Serial.println(host);
+      }
+    }
+
+    if (client.connected())
+      client.loop();
+  } else {
+    Serial.println("Wifi not connected");
   }
-  client.loop();
 }
 
 unsigned int *integerArray(char *str, unsigned int *out_len) {
@@ -106,11 +92,9 @@ unsigned int *integerArray(char *str, unsigned int *out_len) {
   return arr;
 }
 
-void sendIR(unsigned int *sequence) 
+void sendIR(unsigned int *sequence, int len) 
 {  
   const unsigned int hz = 38;
-  const unsigned int len = sizeof(sequence) / sizeof(sequence[0]);
-
   Serial.print("Sending ");
   Serial.print(len);
   Serial.println(" IR commands");
@@ -130,6 +114,6 @@ void callback(const MQTT::Publish& pub) {
   Serial.print("Parsed sequence with length: ");
   Serial.println(len);
   
-  sendIR(sequence);
+  sendIR(sequence, len);
 }
 
