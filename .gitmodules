@@ -2,3 +2,6 @@
 	path = hap
 	url = git@github.com:rnystrom/HAP-NodeJS.git
     ignore = dirty
+[submodule "echo"]
+	path = echo
+	url = git@github.com:rnystrom/fauxmo.git
