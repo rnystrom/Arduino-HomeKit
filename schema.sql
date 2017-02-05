@@ -21,3 +21,10 @@ CREATE TABLE devices (
   created TEXT NOT NULL,
   FOREIGN KEY(channel_pk) REFERENCES channels(pk)
 );
+
+DROP TABLE IF EXISTS pending_commands;
+CREATE TABLE pending_commands (
+  pk INTEGER PRIMARY KEY AUTOINCREMENT,
+  command TEXT NOT NULL,
+  datetime TEXT NOT NULL
+)
