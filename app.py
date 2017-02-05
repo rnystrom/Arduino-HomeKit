@@ -8,9 +8,6 @@ from flask import Flask, request, session, g, redirect, url_for, abort, \
 from Naked.toolshed.shell import execute
 import paho.mqtt.client as mqtt
 
-client = mqtt.Client()
-client.connect('10.0.1.17', 1883, 60)
-
 app = Flask(__name__)
 app.config.from_object(__name__)
 
@@ -345,9 +342,13 @@ def send_mqtt(device_pk):
     FROM devices AS d
     LEFT OUTER JOIN channels AS c
     ON c.pk = d.channel_pk
-    WHERE PK = ?'''
+    WHERE d.pk = ?''',
     [device_pk], one=True)
+
+  client = mqtt.Client('device_server')
+  client.connect('10.0.1.17', 1883)
   client.publish(device['channel_name'], device['sequence'])
+  client.loop(2)
 
 @app.route('/devices/save_state/<int:device_pk>', methods=['POST'])
 def set_device_state(device_pk):
