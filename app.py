@@ -6,6 +6,10 @@ from multiprocessing import Process
 from flask import Flask, request, session, g, redirect, url_for, abort, \
   render_template, flash, jsonify
 from Naked.toolshed.shell import execute
+import paho.mqtt.client as mqtt
+
+client = mqtt.Client()
+client.connect('10.0.1.17', 1883, 60)
 
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -333,6 +337,18 @@ def get_devices_json():
     arr.append(device_to_dict(device))
   return jsonify(arr)
 
+def send_mqtt(device_pk):
+  device = query_db('''
+    SELECT
+      d.sequence,
+      c.name AS channel_name
+    FROM devices AS d
+    LEFT OUTER JOIN channels AS c
+    ON c.pk = d.channel_pk
+    WHERE PK = ?'''
+    [device_pk], one=True)
+  client.publish(device['channel_name'], device['sequence'])
+
 @app.route('/devices/save_state/<int:device_pk>', methods=['POST'])
 def set_device_state(device_pk):
   execute_db('''
@@ -345,6 +361,7 @@ def set_device_state(device_pk):
       request.get_json(force=True, silent=True)['state'],
       device_pk
     ])
+  send_mqtt(device_pk)
   return 'success'
 
 @app.route('/devices/state/<int:device_pk>')
