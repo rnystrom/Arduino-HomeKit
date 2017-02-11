@@ -355,8 +355,20 @@ def send_mqtt(device_pk):
   client.publish(device['channel_name'], device['sequence'])
   client.loop(2)
 
+def device_state(device_pk):
+  query_db('''
+    SELECT 
+      state
+    FROM devices 
+    WHERE pk = ?''',
+    [device_pk], one=True)
+  return device['state']
+
 @app.route('/devices/save_state/<int:device_pk>/<int:state>')
 def set_device_state(device_pk, state):
+  if state == device_state(device_pk):
+    return
+
   execute_db('''
     UPDATE devices 
     SET
@@ -372,10 +384,5 @@ def set_device_state(device_pk, state):
 
 @app.route('/devices/state/<int:device_pk>')
 def get_device_state(device_pk):
-  device = query_db('''
-    SELECT 
-      state
-    FROM devices 
-    WHERE pk = ?''',
-    [device_pk], one=True)
-  return jsonify({ 'state': device['state'] })
+  state = device_state(device_pk)
+  return jsonify({ 'state': state })
