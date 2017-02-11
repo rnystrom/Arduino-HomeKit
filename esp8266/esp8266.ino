@@ -13,7 +13,7 @@
 
 IRsend irsend(D1);
 
-const char* host = "living_room/#"; // the name of your fixture, and the base channel to listen to
+const char* host = "bed_room/#"; // the name of your fixture, and the base channel to listen to
 IPAddress MQTTserver(10, 0, 1, 17);
 
 WiFiClient wclient;
@@ -60,7 +60,7 @@ void loop()
 {
   if (WiFi.status() == WL_CONNECTED) {
     if (!client.connected()) {
-      if (client.connect("ESP8266: Fountain")) {
+      if (client.connect("ESP8266: Fountain - 2")) {
         client.subscribe(host);
         Serial.print("Connected to ");
         Serial.println(host);

@@ -7,6 +7,7 @@ from flask import Flask, request, session, g, redirect, url_for, abort, \
   render_template, flash, jsonify
 from Naked.toolshed.shell import execute
 import paho.mqtt.client as mqtt
+import subprocess
 
 app = Flask(__name__)
 app.config.from_object(__name__)
@@ -32,6 +33,13 @@ def restart_node():
   p.start()
 
 restart_node()
+  
+def run_fauxmo():
+  execute('pyton echo/fauxmo.py')
+
+def restart_fauxmo():
+  p = Process(target=run_fauxmo)
+  p.start()
 
 def connect_db():
   rv = sqlite3.connect(app.config['DATABASE'])
@@ -298,7 +306,7 @@ def delete_pending_command(command_pk):
 
 @app.route('/restart')
 def restart_hap():
-  restart_nod()
+  restart_node()
   return redirect(url_for('get_devices'))
 
 def device_to_dict(device):
