@@ -355,7 +355,7 @@ def send_mqtt(device_pk):
   client.publish(device['channel_name'], device['sequence'])
   client.loop(2)
 
-@app.route('/devices/save_state/<int:device_pk>/<int:state>', methods=['POST'])
+@app.route('/devices/save_state/<int:device_pk>/<int:state>')
 def set_device_state(device_pk, state):
   execute_db('''
     UPDATE devices 
