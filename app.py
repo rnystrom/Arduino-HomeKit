@@ -364,7 +364,7 @@ def send_mqtt(device_pk):
   client.loop(2)
 
 def device_state(device_pk):
-  query_db('''
+  device = query_db('''
     SELECT 
       state
     FROM devices 
@@ -375,7 +375,7 @@ def device_state(device_pk):
 @app.route('/devices/save_state/<int:device_pk>/<int:state>')
 def set_device_state(device_pk, state):
   if state == device_state(device_pk):
-    return
+    return 'skipped'
 
   execute_db('''
     UPDATE devices 
